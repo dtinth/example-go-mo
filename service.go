@@ -13,11 +13,11 @@ func NewPromotionService(repo UserRepository) *PromotionService {
 	return &PromotionService{repo: repo}
 }
 
-func (s *PromotionService) CalculateWinRate(u User) int {
+func (s *PromotionService) calculateWinRate(u User) int {
 	return (u.GamesWon * 100) / u.GamesTotal
 }
 
-func (s *PromotionService) FormatSummary(u User, winRate int) (string, error) {
+func (s *PromotionService) formatSummary(u User, winRate int) (string, error) {
 	if u.Username == "" {
 		return "", errors.New("player is missing username")
 	}
@@ -36,13 +36,13 @@ func (s *PromotionService) GenerateReport() (TopPlayerReport, error) {
 	for _, u := range users {
 		report.TotalProcessed++
 
-		winRate := s.CalculateWinRate(u)
+		winRate := s.calculateWinRate(u)
 
 		if winRate < 50 {
 			continue
 		}
 
-		summary, err := s.FormatSummary(u, winRate)
+		summary, err := s.formatSummary(u, winRate)
 		if err != nil {
 			report.ErrorCount++
 			errs = append(errs, fmt.Errorf("skipped user %d: %w", u.ID, err))
@@ -67,7 +67,7 @@ func (s *PromotionService) CalculateAverageWinRate() (int, error) {
 
 	totalWinRate := 0
 	for _, u := range users {
-		totalWinRate += s.CalculateWinRate(u)
+		totalWinRate += s.calculateWinRate(u)
 	}
 
 	return totalWinRate / len(users), nil

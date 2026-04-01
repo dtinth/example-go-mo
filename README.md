@@ -1,8 +1,12 @@
-`service.go` contains a `GenerateReport` function that:
+`service.go` contains:
 
-- processes a batch of users from the (mock) DB repository
-- calculates their win rates
-- generates a report of top players while gracefully accumulating errors for invalid profiles
+- a `GenerateReport` function that:
+  - processes a batch of users from the (mock) DB repository
+  - calculates their win rates
+  - generates a report of top players while gracefully accumulating errors for invalid profiles
+- a `CalculateAverageWinRate` function that:
+  - computes the average win rate across all users
+  - handles potential database errors gracefully
 
 To run:
 
@@ -26,4 +30,6 @@ Job finished with accumulated errors:
 
 Top Players:
 - Player alice (ID: 1) - Win Rate: 80%
+
+System-wide Average Win Rate: 63%
 ```

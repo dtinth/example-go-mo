@@ -54,3 +54,21 @@ func (s *PromotionService) GenerateReport() (TopPlayerReport, error) {
 
 	return report, errors.Join(errs...)
 }
+
+func (s *PromotionService) CalculateAverageWinRate() (int, error) {
+	users, err := s.repo.GetAllUsers()
+	if err != nil {
+		return 0, fmt.Errorf("failed to fetch users from database: %w", err)
+	}
+
+	if len(users) == 0 {
+		return 0, nil
+	}
+
+	totalWinRate := 0
+	for _, u := range users {
+		totalWinRate += s.CalculateWinRate(u)
+	}
+
+	return totalWinRate / len(users), nil
+}

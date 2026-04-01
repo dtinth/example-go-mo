@@ -23,4 +23,12 @@ func main() {
 	for _, p := range report.TopPlayers {
 		fmt.Println("-", p)
 	}
+
+	avgWinRate, err := service.CalculateAverageWinRate()
+	fmt.Println("")
+	if err != nil {
+		fmt.Println("Failed to calculate average win rate:", err)
+	} else {
+		fmt.Printf("System-wide Average Win Rate: %d%%\n\n", avgWinRate)
+	}
 }

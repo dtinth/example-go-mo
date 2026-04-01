@@ -16,3 +16,14 @@ go run .
 # Run the tests
 go test -v
 ```
+
+Expected result from `go run .`:
+
+```
+Processed 3 users. Found 1 errors.
+Job finished with accumulated errors:
+ skipped user 3: player is missing username
+
+Top Players:
+- Player alice (ID: 1) - Win Rate: 80%
+```
